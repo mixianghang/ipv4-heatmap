@@ -120,10 +120,12 @@ static void legend_scale(const char *orient) {
 
   for (i = 0; i <= 100; i += pct_inc) {
     char tmp[10];
+    int temp_value;
     if (0.0 == log_A) {
       snprintf(tmp, 10, "%d%%", i);
     } else {
-      snprintf(tmp, 10, "%d", (int)(log_A * exp(2.55 * i / log_C) + 0.5));
+      temp_value = (int)(log_A * exp(2.55 * i / log_C) + 0.5);
+      snprintf(tmp, 10, "%d", temp_value);
     }
     if (0 == strcmp(orient, "vert")) {
       BBOX_SET(tbox, BBB.xmin + 256,
@@ -217,19 +219,19 @@ static void legend_save(const char *orient) {
 void legend(const char *title, const char *orient) {
 
   if (0 == strcmp(orient, "vert")) {
-    BBOX_SET(legend_bb, 4096, 0, 1024, 4096);
-    BBOX_SET(AAA, legend_bb.xmin, legend_bb.ymin, legend_bb.xmin + 1024,
+    BBOX_SET(legend_bb, 4096, 0, 512, 4096);
+    BBOX_SET(AAA, legend_bb.xmin, legend_bb.ymin, legend_bb.xmin + 512,
              legend_bb.ymin + 1024);
-    BBOX_SET(BBB, AAA.xmin + 128, AAA.ymax + 128, AAA.xmax - 128,
+    BBOX_SET(BBB, AAA.xmin + 8, AAA.ymax + 128, AAA.xmax - 8,
              AAA.ymax + 128 + 1400);
     BBOX_SET(CCC, BBB.xmin, BBB.ymax + 128, BBB.xmax, BBB.ymax + 128 + 1024);
   } else if (0 == strcmp(orient, "horiz")) {
-    BBOX_SET(legend_bb, 0, 4096, 4096, 1024);
+    BBOX_SET(legend_bb, 0, 4096, 4096, 512);
     BBOX_SET(AAA, legend_bb.xmin, legend_bb.ymin, legend_bb.xmin + 1024,
-             legend_bb.ymin + 1024);
-    BBOX_SET(BBB, AAA.xmax + 128, AAA.ymin + 128, AAA.xmax + 128 + 1400,
-             AAA.ymax - 128);
-    BBOX_SET(CCC, BBB.xmax + 128, BBB.ymin, BBB.xmax + 128 + 1024, BBB.ymin);
+             legend_bb.ymin + 512);
+    BBOX_SET(BBB, AAA.xmax + 128, AAA.ymin, AAA.xmax + 128 + 1400,
+             AAA.ymax);
+    BBOX_SET(CCC, BBB.xmax + 128, BBB.ymin, BBB.xmax + 128 + 1024, BBB.ymax);
   } else {
     errx(1, "bad orientation: %s\n", orient);
   }

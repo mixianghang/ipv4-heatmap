@@ -157,9 +157,9 @@ void initialize(void) {
   if (NULL == title)
     (void)0; /* no legend */
   else if (0 == strcmp(legend_orient, "horiz"))
-    h += (h >> 2);
+    h += (h >> 3);
   else
-    w += (w >> 2);
+    w += (w >> 3);
 
   if (debug) {
     fprintf(stderr, "image width = %d\n", w);
