@@ -88,6 +88,7 @@ int legend_prefixes_flag = 0;
 int reverse_flag = 0; /* reverse background/font colors */
 int morton_flag = 0;
 int accumulate_counts = 0; /* for when the input data contains a value */
+int is_filter = 0; /* whether to filter k less than log_a*/
 
 struct {
   unsigned int secs;
@@ -386,6 +387,7 @@ void paint(void) {
 
       k = atoi(t);
       if (accumulate_counts) k += get_pixel_value(x, y);
+      if (is_filter && 0.0 != log_A && k < log_A) continue; // filter out low value k
       if (0.0 != log_A) k = (int)((log_C * log((double)k / log_A)) + 0.5); // apply logarithmic stretching
 
     } else {
@@ -512,6 +514,7 @@ void usage(const char *argv0) {
   printf("\t-A float   logarithmic scaling, min value\n");
   printf("\t-B float   logarithmic scaling, max value\n");
   printf("\t-C         values accumulate in Exact input mode\n");
+  printf("\t-F         whether to filter values less than the number given in -A\n");
   printf("\t-a file    annotations file\n");
   printf("\t-c color   color of annotations (0xRRGGBB)\n");
   printf("\t-d         increase debugging\n");
@@ -541,7 +544,7 @@ int main(int argc, char *argv[]) {
 
   int ch;
 
-  while ((ch = getopt(argc, argv, "A:B:a:Cc:df:g:hik:mo:P:prs:t:u:y:z:?")) != -1) {
+  while ((ch = getopt(argc, argv, "A:B:a:Cc:dFf:g:hik:mo:P:prs:t:u:y:z:?")) != -1) {
 
     switch (ch) {
     case 'A':
@@ -552,6 +555,9 @@ int main(int argc, char *argv[]) {
       break;
     case 'C':
       accumulate_counts = 1;
+      break;
+    case 'F':
+      is_filter = 1;
       break;
     case 'd':
       debug++;

@@ -107,8 +107,8 @@ static void legend_scale(const char *orient) {
   for (i = 0; i < num_colors; i++) {
     if (0 == strcmp(orient, "vert")) {
       BBOX_SET(tbox, BBB.xmin + 128,
-               BBB.ymin + 256 + ((num_colors - i - 1) * 4), BBB.xmin + 256,
-               BBB.ymin + 256 + ((num_colors - i - 1) * 4) + 3);
+               BBB.ymin + 256 + ((num_colors - i - 1) * 8), BBB.xmin + 256,
+               BBB.ymin + 256 + ((num_colors - i - 1) * 8) + 7);
     } else {
       pct_inc = 25;
       BBOX_SET(tbox, BBB.xmin + 256 + (i * 4), BBB.ymin + 256,
@@ -129,14 +129,14 @@ static void legend_scale(const char *orient) {
     }
     if (0 == strcmp(orient, "vert")) {
       BBOX_SET(tbox, BBB.xmin + 256,
-               BBB.ymin + 256 + ((num_colors - (i * 2.55) - 1) * 4) - 30,
+               BBB.ymin + 256 + ((num_colors - (i * 2.55) - 1) * 8) - 60,
                BBB.xmin + 512,
-               BBB.ymin + 256 + ((num_colors - (i * 2.55) - 1) * 4) + 30);
+               BBB.ymin + 256 + ((num_colors - (i * 2.55) - 1) * 8) + 60);
     } else {
       BBOX_SET(tbox, BBB.xmin + 256 + (i * 2.55 * 4) - 256, BBB.ymin + 442,
                BBB.xmin + 256 + (i * 2.55 * 4) + 256, BBB.ymin + 442 + 72);
     }
-    text_in_bbox(tmp, tbox, textColor, 0.0);
+    text_in_bbox(tmp, tbox, textColor, 128.0);
   }
 }
 

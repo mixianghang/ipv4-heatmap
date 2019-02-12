@@ -54,7 +54,7 @@ void annotate_cidr(const char *cidr, const char *label, const char *sublabel) {
     box2.ymax = box2.ymin + 24;
     if (0 == strcmp(sublabel, "prefix"))
       sublabel = cidr;
-    text_in_bbox(sublabel, box2, annotateColor, 12.0);
+    text_in_bbox(sublabel, box2, annotateColor, 64.0);
   }
 }
 
